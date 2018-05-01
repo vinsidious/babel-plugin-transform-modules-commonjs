@@ -62,7 +62,9 @@ jobs:
             git push --tags
       - run: 
           name: Publish
-          command: npm publish
+          command: |
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+            npm publish
       - persist_to_workspace:
           root: .
           paths:
