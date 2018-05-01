@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist",
+    "declaration": true,
+    "importHelpers": true,
+    "listFiles": false,
+    "traceResolution": false,
+    "pretty": true,
+    "esModuleInterop": true,
+    "typeRoots": [
+      "src/types",
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es6"
+    ]
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules/**/*",
+    "src/**/*.spec.ts"
+  ],
+  "compileOnSave": false
+}

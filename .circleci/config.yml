@@ -1,0 +1,71 @@
+defaults: &defaults
+  docker:
+    - image: circleci/node:carbon
+  working_directory: ~/babel-plugin-transform-modules-commonjs
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/babel-plugin-transform-modules-commonjs
+      - restore_cache:
+          keys:
+            - npm-cache-{{ .Branch }}-{{ checksum "package.json" }}
+            - npm-cache-{{ .Branch }}
+            - npm-cache-
+      - run: 
+          name: Install Dependencies
+          command: npm install
+      - run: 
+          name: Compile Code
+          command: npm run build
+      - save_cache:
+          key: npm-cache-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/babel-plugin-transform-modules-commonjs
+      - run: npm install
+      - run: npm run ci
+
+  release:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/babel-plugin-transform-modules-commonjs
+      - run: npm install
+      - run: git config --global user.email "vincecoppola@gmail.com"
+      - run: git config --global user.name "Vince Coppola"
+      - run: npm run release
+      - run: git push --follow-tags origin HEAD
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+workflows:
+  version: 2
+  test_build_deploy:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - release:
+          requires:
+            - send-coverage
+          filters:
+            branches:
+              only:
+                - master
