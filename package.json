@@ -1,6 +1,6 @@
 {
   "name": "@vincecoppola/babel-plugin-transform-modules-commonjs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Transform module imports/exports into their commonjs equivalents.",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -21,8 +21,7 @@
     "docs:json": "typedoc --mode file --json docs/typedoc.json src/index.ts",
     "docs:publish": "npm run docs:html && ts-node tools/gh-pages-publish",
     "changelog": "standard-version",
-    "release": "npm run reset && npm run changelog",
-    "reset": "git clean -dfx && git reset --hard && npm install",
+    "release": "npm run changelog",
     "ci": "npm run test"
   },
   "scripts-info": {
@@ -38,7 +37,7 @@
     "docs:json": "Generate API documentation in typedoc JSON format",
     "changelog": "Bump package.json version, update CHANGELOG.md, tag a release",
     "reset": "Delete all untracked files and reset the repo to the last commit",
-    "release": "Clean, build, test, publish docs, and prepare release (a one-step publish process)",
+    "release": "Prepare release (a one-step publish process)",
     "ci": "CI task; Run by circleci (or other) to verify integrity of repo"
   },
   "engines": {
@@ -70,7 +69,7 @@
     "typescript": "^2.8.3"
   },
   "standard-version": {
-    "message": "chore(release): %s [skip ci]",
+    "message": "chore(release): %s",
     "tagPrefix": ""
   }
 }
