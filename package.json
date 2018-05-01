@@ -1,6 +1,6 @@
 {
   "name": "@vincecoppola/babel-plugin-transform-modules-commonjs",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Transform module imports/exports into their commonjs equivalents.",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
