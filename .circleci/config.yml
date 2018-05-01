@@ -49,6 +49,7 @@ jobs:
       - run: git config --global user.name "Vince Coppola"
       - run: npm run release
       - run: |
+          mkdir ~/.ssh
           cat << EOF > ~/.ssh/config
           Host *
               StrictHostKeyChecking    no
