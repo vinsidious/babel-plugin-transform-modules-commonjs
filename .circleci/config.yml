@@ -48,7 +48,8 @@ jobs:
       - run: git config --global user.email "vincecoppola@gmail.com"
       - run: git config --global user.name "Vince Coppola"
       - run: npm run release
-      - run: git push --follow-tags origin HEAD
+      - run: git push --tags
+      - run: npm run publish
       - persist_to_workspace:
           root: .
           paths:
