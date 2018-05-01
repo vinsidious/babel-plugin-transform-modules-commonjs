@@ -36,7 +36,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/babel-plugin-transform-modules-commonjs
-      - run: npm install
       - run: npm run ci
 
   release:
@@ -44,18 +43,26 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/babel-plugin-transform-modules-commonjs
-      - run: npm install
-      - run: git config --global user.email "vincecoppola@gmail.com"
-      - run: git config --global user.name "Vince Coppola"
-      - run: npm run release
-      - run: |
-          mkdir ~/.ssh
-          cat << EOF > ~/.ssh/config
-          Host *
-              StrictHostKeyChecking    no
-          EOF
-          git push --tags
-      - run: npm run publish
+      - run: 
+          name: Set git user
+          command: |
+            git config --global user.email "vincecoppola@gmail.com"
+            git config --global user.name "Vince Coppola"
+      - run: 
+          name: Bump version
+          command: npm run release
+      - run: 
+          name: Push tags
+          command: |
+            mkdir ~/.ssh
+            cat << EOF > ~/.ssh/config
+            Host *
+                StrictHostKeyChecking    no
+            EOF
+            git push --tags
+      - run: 
+          name: Publish
+          command: npm publish
       - persist_to_workspace:
           root: .
           paths:
@@ -63,7 +70,7 @@ jobs:
 
 workflows:
   version: 2
-  test_build_deploy:
+  build_test_release:
     jobs:
       - build
       - test:
