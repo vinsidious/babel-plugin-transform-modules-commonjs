@@ -1,6 +1,7 @@
 node_modules
 dist
 test
+tools
 src/**.js
 
 coverage
